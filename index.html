@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grand Line Search • Fhellype & Clara</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-ship">
+      <div class="mast"></div>
+      <div class="sail sail-main"></div>
+      <div class="sail sail-small"></div>
+      <div class="flag"></div>
+      <div class="hull"></div>
+    </div>
+    <h1>Grand Line Search</h1>
+    <p>Carregando o mar, o navio e os tesouros de One Piece...</p>
+    <div class="loading-bar"><div class="loading-fill"></div></div>
+  </div>
+
+  <div class="bg-overlay"></div>
+  <div class="sea-ship" aria-hidden="true">
+    <div class="mast"></div>
+    <div class="sail left"></div>
+    <div class="sail right"></div>
+    <div class="flag"></div>
+    <div class="hull"></div>
+  </div>
+
+  <main class="app-shell">
+    <section class="hero-card">
+      <div class="hero-copy">
+        <span class="eyebrow">ONE PIECE SEARCH</span>
+        <h1>Busca <span class="gold">Fhellype</span> &amp; <span class="blue">Clara</span></h1>
+        <p>
+          Digite <strong>Fhellype</strong> para abrir resultados do <strong>Sanji</strong> e digite <strong>Clara</strong> para abrir resultados da <strong>Nico Robin</strong>.
+          No modo imagem, o site mostra uma arte estática. No modo GIF, ele usa a <strong>API real do GIPHY</strong>.
+        </p>
+      </div>
+
+      <div class="hero-badges">
+        <div class="badge">⚓ Fundo marinho com navio</div>
+        <div class="badge">✨ Moldura dourada premium</div>
+        <div class="badge">🎞️ GIF via API do GIPHY</div>
+      </div>
+    </section>
+
+    <section class="search-panel">
+      <div class="mode-switch">
+        <button class="mode-btn active" id="imageModeBtn" type="button">Modo Imagem</button>
+        <button class="mode-btn" id="gifModeBtn" type="button">Modo GIF</button>
+      </div>
+
+      <div class="search-box">
+        <input id="searchInput" type="text" placeholder="Digite Fhellype ou Clara" autocomplete="off" />
+        <button class="search-btn" id="searchBtn" type="button">Pesquisar</button>
+        <button class="secondary-btn" id="randomBtn" type="button">Aleatório</button>
+      </div>
+
+      <div class="status-row">
+        <p class="status-text" id="statusText">Digite Fhellype ou Clara para começar.</p>
+        <span class="source-pill" id="currentSource">Fonte: galeria local</span>
+      </div>
+    </section>
+
+    <section class="content-grid">
+      <aside class="side-card info-card">
+        <h2>Comandos</h2>
+        <div class="command-list">
+          <div class="command-item"><strong>Fhellype</strong><span>Sanji</span></div>
+          <div class="command-item"><strong>Clara</strong><span>Nico Robin</span></div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h3>Controles</h3>
+        <div class="action-buttons">
+          <button class="ghost-btn" id="nextBtn" type="button">Próximo resultado</button>
+          <a class="link-btn disabled" id="openOriginalLink" href="#" target="_blank" rel="noopener noreferrer">Abrir original</a>
+        </div>
+
+        <div class="divider"></div>
+
+        <h3>Observação</h3>
+        <p class="side-note">
+          O modo GIF usa sua chave do GIPHY. Se a API falhar, o site ainda mostra resultados de backup para não quebrar.
+        </p>
+      </aside>
+
+      <section class="viewer-card">
+        <div class="viewer empty-state" id="viewer">
+          <div class="empty-icon">🧭</div>
+          <h2>Pronto para navegar</h2>
+          <p>Faça uma busca para ver Sanji ou Nico Robin.</p>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
