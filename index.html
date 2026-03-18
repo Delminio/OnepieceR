@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fhellype & Clara Search</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-overlay"></div>
+
+  <main class="app-shell">
+    <header class="hero-card">
+      <div class="hero-copy">
+        <span class="eyebrow">ONE PIECE SEARCH MODE</span>
+        <h1>Busca do <span class="gold">Fhellype</span> & <span class="blue">Clara</span></h1>
+        <p>
+          Digite <strong>Fhellype</strong> para buscar <strong>Sanji</strong> ou <strong>Clara</strong> para buscar <strong>Nico Robin</strong>.
+          No modo GIF a busca usa a API real do GIPHY. No modo imagem, o site usa uma galeria curada local.
+        </p>
+      </div>
+
+      <div class="hero-badges">
+        <div class="badge">⚓ Visual anime</div>
+        <div class="badge">🎞️ API real do GIPHY</div>
+        <div class="badge">🖼️ Imagens locais</div>
+      </div>
+    </header>
+
+    <section class="search-panel">
+      <div class="mode-switch" role="tablist" aria-label="Modo de busca">
+        <button id="imageModeBtn" class="mode-btn active" type="button">Modo Imagem</button>
+        <button id="gifModeBtn" class="mode-btn" type="button">Modo GIF</button>
+      </div>
+
+      <div class="search-box">
+        <input id="searchInput" type="text" placeholder="Digite Fhellype ou Clara" autocomplete="off" />
+        <button id="searchBtn" class="search-btn" type="button">Pesquisar</button>
+        <button id="randomBtn" class="secondary-btn" type="button">Aleatório</button>
+      </div>
+
+      <div class="status-row">
+        <p id="statusText" class="status-text">Escolha um modo e digite um nome.</p>
+        <span id="currentSource" class="source-pill">Fonte: galeria local</span>
+      </div>
+    </section>
+
+    <section class="content-grid">
+      <aside class="side-card info-card">
+        <h2>Como funciona</h2>
+        <ul>
+          <li><strong>Fhellype</strong> = Sanji</li>
+          <li><strong>Clara</strong> = Nico Robin</li>
+          <li><strong>Modo GIF</strong> = busca real na API do GIPHY</li>
+          <li><strong>Modo imagem</strong> = imagens locais prontas no site</li>
+        </ul>
+
+        <div class="mini-panel">
+          <h3>API key</h3>
+          <p>
+            Para o modo GIF funcionar, abra o arquivo <code>script.js</code> e coloque sua chave do GIPHY em
+            <code>const GIPHY_API_KEY</code>.
+          </p>
+        </div>
+
+        <div class="mini-panel warning">
+          <h3>Google Imagens</h3>
+          <p>
+            O Google Imagens não oferece uma integração front-end simples para esse caso. Por isso, deixei a parte de imagens funcionando com galeria local,
+            e a parte de GIF com API real do GIPHY.
+          </p>
+        </div>
+      </aside>
+
+      <section class="viewer-card">
+        <div id="viewer" class="viewer empty-state">
+          <div class="empty-icon">☀️</div>
+          <h2>Pronto para navegar</h2>
+          <p>Pesquise um nome para exibir uma imagem ou GIF em estilo One Piece.</p>
+        </div>
+
+        <div class="result-actions">
+          <button id="nextBtn" class="ghost-btn" type="button">Próximo resultado</button>
+          <a id="openOriginalLink" class="ghost-btn link-btn disabled" href="#" target="_blank" rel="noopener noreferrer">Abrir original</a>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
