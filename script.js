@@ -1,4 +1,4 @@
-const GIPHY_API_KEY = 'COLE_SUA_CHAVE_AQUI';
+const GIPHY_API_KEY = 'tfbPBDAbBTLzoR5nGDp4Fs1wHK3jYSRf';
 const GIPHY_ENDPOINT = 'https://api.giphy.com/v1/gifs/search';
 
 const localImages = {
