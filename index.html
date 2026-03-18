@@ -3,93 +3,600 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fhellype & Clara Search</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
+  <title>Busca Fhellype & Clara</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top, rgba(245, 158, 11, 0.22), transparent 28%),
+        linear-gradient(180deg, #0b1f3a 0%, #0f2f55 38%, #0b2745 60%, #061726 100%);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(transparent 62%, rgba(18, 78, 122, 0.55) 63%, rgba(9, 48, 82, 0.92) 100%),
+        radial-gradient(circle at 20% 18%, rgba(255,255,255,0.18), transparent 12%),
+        radial-gradient(circle at 78% 14%, rgba(255,255,255,0.12), transparent 10%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '⚓';
+      position: fixed;
+      right: 4%;
+      bottom: 18%;
+      font-size: 12rem;
+      color: rgba(245, 158, 11, 0.08);
+      transform: rotate(-14deg);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .sea-ship {
+      position: fixed;
+      left: 4%;
+      bottom: 12%;
+      width: 280px;
+      height: 150px;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.9;
+      animation: floatShip 4.5s ease-in-out infinite;
+    }
+
+    .sea-ship .mast {
+      position: absolute;
+      left: 115px;
+      bottom: 42px;
+      width: 8px;
+      height: 78px;
+      background: linear-gradient(180deg, #f8e7b0, #c98f1b);
+      border-radius: 6px;
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.25);
+    }
+
+    .sea-ship .sail {
+      position: absolute;
+      background: linear-gradient(180deg, #fff8dc, #ecd8a1);
+      clip-path: polygon(0 0, 100% 18%, 76% 100%, 0 78%);
+      filter: drop-shadow(0 0 12px rgba(255, 221, 120, 0.25));
+    }
+
+    .sea-ship .sail.left {
+      width: 82px;
+      height: 74px;
+      left: 37px;
+      bottom: 68px;
+    }
+
+    .sea-ship .sail.right {
+      width: 68px;
+      height: 62px;
+      left: 122px;
+      bottom: 74px;
+      transform: scaleX(-1);
+    }
+
+    .sea-ship .hull {
+      position: absolute;
+      left: 24px;
+      bottom: 10px;
+      width: 210px;
+      height: 46px;
+      background: linear-gradient(180deg, #6c3412, #2b1308);
+      border: 2px solid rgba(255, 201, 82, 0.45);
+      border-radius: 0 0 70px 70px / 0 0 34px 34px;
+      box-shadow: 0 0 18px rgba(245, 158, 11, 0.14);
+    }
+
+    .sea-ship .flag {
+      position: absolute;
+      left: 121px;
+      bottom: 112px;
+      width: 26px;
+      height: 18px;
+      background: linear-gradient(90deg, #fbbf24, #f59e0b);
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
+      animation: waveFlag 1.5s ease-in-out infinite;
+      transform-origin: left center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 950px;
+      background: rgba(9, 16, 30, 0.72);
+      border: 2px solid rgba(245, 186, 58, 0.62);
+      backdrop-filter: blur(16px);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow:
+        0 0 0 3px rgba(255, 228, 148, 0.12) inset,
+        0 0 28px rgba(245, 158, 11, 0.18),
+        0 24px 60px rgba(0, 0, 0, 0.45);
+      position: relative;
+      z-index: 1;
+    }
+
+    .container::before {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 225, 140, 0.22);
+      pointer-events: none;
+    }
+
+    h1 {
+      font-size: 2.3rem;
+      text-align: center;
+      margin-bottom: 10px;
+      color: #fff4cf;
+      text-shadow: 0 0 18px rgba(245, 158, 11, 0.34);
+      letter-spacing: 0.5px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #f5e6b7;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .search-area {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 12px;
+      margin-bottom: 22px;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(245, 186, 58, 0.35);
+      border-radius: 20px;
+      box-shadow: 0 0 0 1px rgba(255, 235, 167, 0.08) inset;
+    }
+
+    input {
+      width: 100%;
+      padding: 16px 18px;
+      border: 1px solid rgba(255, 214, 120, 0.22);
+      outline: none;
+      border-radius: 14px;
+      font-size: 1rem;
+      background: rgba(255,255,255,0.08);
+      color: white;
+      box-shadow: 0 0 14px rgba(245, 158, 11, 0.08) inset;
+    }
+
+    input::placeholder {
+      color: #e7d8a8;
+    }
+
+    button {
+      border: 1px solid rgba(255, 223, 133, 0.35);
+      cursor: pointer;
+      padding: 0 18px;
+      border-radius: 14px;
+      font-size: 0.98rem;
+      font-weight: bold;
+      transition: 0.25s ease;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+    }
+
+    .btn-search {
+      background: linear-gradient(135deg, #ffd56a, #f59e0b);
+      color: #1b1b1b;
+    }
+
+    .btn-mode {
+      background: linear-gradient(135deg, #2549a8, #0ea5e9);
+      color: white;
+    }
+
+    button:hover {
+      transform: translateY(-2px) scale(1.01);
+      opacity: 0.96;
+      box-shadow: 0 10px 25px rgba(245, 158, 11, 0.18);
+    }
+
+    .status {
+      text-align: center;
+      margin-bottom: 18px;
+      color: #fff2c8;
+      min-height: 24px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 217, 102, 0.08);
+      border: 1px solid rgba(255, 217, 102, 0.16);
+    }
+
+    .viewer {
+      width: 100%;
+      min-height: 420px;
+      border-radius: 24px;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(16,31,57,0.9), rgba(6,15,28,0.95));
+      border: 2px solid rgba(245, 186, 58, 0.36);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 18px;
+      position: relative;
+      box-shadow:
+        0 0 0 3px rgba(255, 226, 137, 0.06) inset,
+        0 0 22px rgba(245, 158, 11, 0.14);
+    }
+
+    .viewer::before {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 236, 176, 0.14);
+      pointer-events: none;
+    }
+
+    .viewer img {
+      width: 100%;
+      max-height: 560px;
+      object-fit: contain;
+      border-radius: 18px;
+      background: #0b1120;
+      border: 2px solid rgba(255, 214, 115, 0.28);
+      box-shadow: 0 0 30px rgba(245, 158, 11, 0.14);
+    }
+
+    .empty {
+      color: #f8eecf;
+      text-align: center;
+      line-height: 1.7;
+      padding: 30px;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(245, 186, 58, 0.18), rgba(255,255,255,0.08));
+      border: 1px solid rgba(255, 221, 138, 0.25);
+      color: #fff7dc;
+      font-size: 0.9rem;
+      box-shadow: 0 0 18px rgba(245, 158, 11, 0.1);
+    }
+
+    .tips {
+      margin-top: 18px;
+      color: #f3e7be;
+      line-height: 1.7;
+      font-size: 0.95rem;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(245, 186, 58, 0.22);
+      background: rgba(255, 255, 255, 0.04);
+      box-shadow: 0 0 0 1px rgba(255, 229, 148, 0.06) inset;
+    }
+
+    .loading-screen {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at top, rgba(245, 158, 11, 0.22), transparent 24%),
+        linear-gradient(180deg, #071525 0%, #0a2647 45%, #061521 100%);
+      z-index: 9999;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+
+    .loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loading-ship {
+      position: relative;
+      width: 220px;
+      height: 140px;
+      margin-bottom: 26px;
+      animation: floatShip 2.8s ease-in-out infinite;
+    }
+
+    .loading-ship .mast {
+      position: absolute;
+      left: 103px;
+      bottom: 38px;
+      width: 8px;
+      height: 72px;
+      background: linear-gradient(180deg, #ffe3a1, #cf8c17);
+      border-radius: 8px;
+    }
+
+    .loading-ship .sail-main,
+    .loading-ship .sail-small {
+      position: absolute;
+      background: linear-gradient(180deg, #fff8db, #efcf7b);
+      filter: drop-shadow(0 0 12px rgba(255, 222, 120, 0.28));
+    }
+
+    .loading-ship .sail-main {
+      left: 32px;
+      bottom: 64px;
+      width: 74px;
+      height: 70px;
+      clip-path: polygon(0 0, 100% 18%, 78% 100%, 0 82%);
+    }
+
+    .loading-ship .sail-small {
+      left: 112px;
+      bottom: 72px;
+      width: 54px;
+      height: 56px;
+      clip-path: polygon(0 0, 100% 22%, 82% 100%, 0 78%);
+      transform: scaleX(-1);
+    }
+
+    .loading-ship .hull {
+      position: absolute;
+      left: 20px;
+      bottom: 12px;
+      width: 180px;
+      height: 40px;
+      background: linear-gradient(180deg, #73350f, #2b1308);
+      border: 2px solid rgba(255, 202, 88, 0.55);
+      border-radius: 0 0 70px 70px / 0 0 32px 32px;
+    }
+
+    .loading-title {
+      font-size: 2rem;
+      color: #fff0bf;
+      text-shadow: 0 0 20px rgba(245, 158, 11, 0.34);
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    .loading-text {
+      color: #f6e5b1;
+      margin-bottom: 18px;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .loading-bar {
+      width: 260px;
+      height: 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 221, 138, 0.3);
+      background: rgba(255,255,255,0.08);
+      overflow: hidden;
+      box-shadow: 0 0 14px rgba(245, 158, 11, 0.12);
+    }
+
+    .loading-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #f59e0b, #ffe08a, #f59e0b);
+      animation: loadBar 2.6s ease forwards;
+    }
+
+    @keyframes floatShip {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes waveFlag {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(6deg); }
+    }
+
+    @keyframes loadBar {
+      from { width: 0%; }
+      to { width: 100%; }
+    }
+
+    @media (max-width: 700px) {
+      .search-area {
+        grid-template-columns: 1fr;
+      }
+
+      button {
+        height: 52px;
+      }
+
+      h1 {
+        font-size: 1.7rem;
+      }
+
+      .container {
+        padding: 18px;
+      }
+
+      .viewer {
+        min-height: 320px;
+      }
+
+      .sea-ship {
+        width: 190px;
+        transform: scale(0.8);
+        left: -10px;
+      }
+
+      .loading-title {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="bg-overlay"></div>
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-ship">
+      <div class="mast"></div>
+      <div class="sail-main"></div>
+      <div class="sail-small"></div>
+      <div class="hull"></div>
+    </div>
+    <div class="loading-title">Grand Line Search</div>
+    <div class="loading-text">Preparando o mar, o navio e os tesouros de One Piece...</div>
+    <div class="loading-bar"><div class="loading-fill"></div></div>
+  </div>
 
-  <main class="app-shell">
-    <header class="hero-card">
-      <div class="hero-copy">
-        <span class="eyebrow">ONE PIECE SEARCH MODE</span>
-        <h1>Busca do <span class="gold">Fhellype</span> & <span class="blue">Clara</span></h1>
-        <p>
-          Digite <strong>Fhellype</strong> para buscar <strong>Sanji</strong> ou <strong>Clara</strong> para buscar <strong>Nico Robin</strong>.
-          No modo GIF a busca usa a API real do GIPHY. No modo imagem, o site usa uma galeria curada local.
-        </p>
+  <div class="sea-ship">
+    <div class="mast"></div>
+    <div class="sail left"></div>
+    <div class="sail right"></div>
+    <div class="flag"></div>
+    <div class="hull"></div>
+  </div>
+  <div class="container">
+    <h1>Busca Fhellype & Clara</h1>
+    <p class="subtitle">
+      Digite <strong>Fhellype</strong> para ver imagens do Sanji ou <strong>Clara</strong> para ver imagens da Nico Robin.<br>
+      Você também pode alternar para o <strong>modo GIF</strong>.
+    </p>
+
+    <div class="search-area">
+      <input id="searchInput" type="text" placeholder="Digite Fhellype ou Clara" />
+      <button class="btn-search" id="searchBtn">Pesquisar</button>
+      <button class="btn-mode" id="modeBtn">Modo: Imagem</button>
+    </div>
+
+    <div class="status" id="status"></div>
+
+    <div class="viewer" id="viewer">
+      <div class="empty">
+        Digite um nome para começar.<br>
+        <span class="tag">Imagem</span>
       </div>
+    </div>
 
-      <div class="hero-badges">
-        <div class="badge">⚓ Visual anime</div>
-        <div class="badge">🎞️ API real do GIPHY</div>
-        <div class="badge">🖼️ Imagens locais</div>
-      </div>
-    </header>
+    <div class="tips">
+      <strong>Importante:</strong> este modelo já funciona, mas usa listas de links cadastrados manualmente.
+      Buscar imagens direto do Google Imagens ou do Giphy apenas colando o site no front-end não funciona bem por bloqueios de CORS e políticas dessas plataformas.
+      Para busca automática real, o ideal é usar uma API oficial no back-end.
+    </div>
+  </div>
 
-    <section class="search-panel">
-      <div class="mode-switch" role="tablist" aria-label="Modo de busca">
-        <button id="imageModeBtn" class="mode-btn active" type="button">Modo Imagem</button>
-        <button id="gifModeBtn" class="mode-btn" type="button">Modo GIF</button>
-      </div>
+  <script>
+    // ===== CONFIGURAÇÃO GIPHY =====
+    // 1. Crie sua chave grátis em: https://developers.giphy.com/
+    // 2. Substitua abaixo
+    const GIPHY_API_KEY = 'COLE_SUA_CHAVE_AQUI';
 
-      <div class="search-box">
-        <input id="searchInput" type="text" placeholder="Digite Fhellype ou Clara" autocomplete="off" />
-        <button id="searchBtn" class="search-btn" type="button">Pesquisar</button>
-        <button id="randomBtn" class="secondary-btn" type="button">Aleatório</button>
-      </div>
+    const loadingScreen = document.getElementById('loadingScreen');
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+    const modeBtn = document.getElementById('modeBtn');
+    const viewer = document.getElementById('viewer');
+    const status = document.getElementById('status');
 
-      <div class="status-row">
-        <p id="statusText" class="status-text">Escolha um modo e digite um nome.</p>
-        <span id="currentSource" class="source-pill">Fonte: galeria local</span>
-      </div>
-    </section>
+    let currentMode = 'image';
 
-    <section class="content-grid">
-      <aside class="side-card info-card">
-        <h2>Como funciona</h2>
-        <ul>
-          <li><strong>Fhellype</strong> = Sanji</li>
-          <li><strong>Clara</strong> = Nico Robin</li>
-          <li><strong>Modo GIF</strong> = busca real na API do GIPHY</li>
-          <li><strong>Modo imagem</strong> = imagens locais prontas no site</li>
-        </ul>
+    const sanjiImages = [
+      'https://i.pinimg.com/736x/74/08/65/740865f1945de1c42cb80aca1e976f7d.jpg',
+      'https://i.pinimg.com/736x/e6/51/f7/e651f7fce6e3d1450aa177d3556f047e.jpg'
+    ];
 
-        <div class="mini-panel">
-          <h3>API key</h3>
-          <p>
-            Para o modo GIF funcionar, abra o arquivo <code>script.js</code> e coloque sua chave do GIPHY em
-            <code>const GIPHY_API_KEY</code>.
-          </p>
-        </div>
+    const robinImages = [
+      'https://i.pinimg.com/736x/f4/ff/1b/f4ff1b08ee4fc4c15b0ae3ff86744323.jpg',
+      'https://i.pinimg.com/736x/52/7d/ca/527dcad58af5e6b819f44715ebf0056c.jpg'
+    ];
 
-        <div class="mini-panel warning">
-          <h3>Google Imagens</h3>
-          <p>
-            O Google Imagens não oferece uma integração front-end simples para esse caso. Por isso, deixei a parte de imagens funcionando com galeria local,
-            e a parte de GIF com API real do GIPHY.
-          </p>
-        </div>
-      </aside>
+    function getRandomItem(array) {
+      return array[Math.floor(Math.random() * array.length)];
+    }
 
-      <section class="viewer-card">
-        <div id="viewer" class="viewer empty-state">
-          <div class="empty-icon">☀️</div>
-          <h2>Pronto para navegar</h2>
-          <p>Pesquise um nome para exibir uma imagem ou GIF em estilo One Piece.</p>
-        </div>
+    function renderResult(src, label, typeLabel) {
+      viewer.innerHTML = `
+        <img src="${src}" alt="${label}" />
+        <span class="tag">${label} • ${typeLabel}</span>
+      `;
+    }
 
-        <div class="result-actions">
-          <button id="nextBtn" class="ghost-btn" type="button">Próximo resultado</button>
-          <a id="openOriginalLink" class="ghost-btn link-btn disabled" href="#" target="_blank" rel="noopener noreferrer">Abrir original</a>
-        </div>
-      </section>
-    </section>
-  </main>
+    async function buscarGif(query) {
+      try {
+        const url = `https://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${query}&limit=25`;
+        const res = await fetch(url);
+        const data = await res.json();
 
-  <script src="script.js"></script>
+        if (!data.data.length) {
+          status.textContent = 'Nenhum GIF encontrado.';
+          return;
+        }
+
+        const randomGif = data.data[Math.floor(Math.random() * data.data.length)].images.original.url;
+        renderResult(randomGif, query, 'GIF');
+
+      } catch (err) {
+        status.textContent = 'Erro ao buscar GIF. Veja se a API está correta.';
+        console.error(err);
+      }
+    }
+
+    function searchCharacter() {
+      const value = searchInput.value.trim().toLowerCase();
+
+      if (!value) {
+        status.textContent = 'Digite Fhellype ou Clara.';
+        return;
+      }
+
+      if (value === 'fhellype') {
+        if (currentMode === 'image') {
+          renderResult(getRandomItem(sanjiImages), 'Sanji', 'Imagem');
+        } else {
+          buscarGif('sanji one piece');
+        }
+        return;
+      }
+
+      if (value === 'clara') {
+        if (currentMode === 'image') {
+          renderResult(getRandomItem(robinImages), 'Nico Robin', 'Imagem');
+        } else {
+          buscarGif('nico robin one piece');
+        }
+        return;
+      }
+
+      status.textContent = 'Digite apenas Fhellype ou Clara.';
+    }
+
+    modeBtn.addEventListener('click', () => {
+      currentMode = currentMode === 'image' ? 'gif' : 'image';
+      modeBtn.textContent = `Modo: ${currentMode === 'image' ? 'Imagem' : 'GIF'}`;
+    });
+
+    searchBtn.addEventListener('click', searchCharacter);
+
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') searchCharacter();
+    });
+
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        loadingScreen.classList.add('hidden');
+      }, 2200);
+    });
+  </script>
 </body>
 </html>
